@@ -119,15 +119,43 @@ class OfflineRenderer(ReadmeRenderer):
         """
         Renders the specified markdown content and embedded styles.
         """
-        if markdown is None:
-            import markdown
-        if UrlizeExtension is None:
-            from .mdx_urlize import UrlizeExtension
-        return markdown.markdown(text, extensions=[
-            'fenced_code',
-            'codehilite(css_class=highlight)',
-            'toc',
-            'tables',
-            'sane_lists',
-            UrlizeExtension(),
-        ])
+        import markdown
+        import pymdownx.emoji as emoji
+        import pymdownx.slugs as slugs
+        return markdown.Markdown(
+            text,
+            extensions=[
+                'markdown.extensions.toc',
+                'markdown.extensions.tables',
+                'markdown.extensions.sane_lists',
+                'markdown.extensions.codehilite',
+                'pymdownx.magiclink',
+                'pymdownx.betterem',
+                'pymdownx.tilde',
+                'pymdownx.emoji',
+                'pymdownx.tasklist',
+                'pymdownx.superfences'
+            ],
+            extension_configs={
+                "markdown.extensions.codehilite": {
+                    "css_class": "highlight"
+                },
+                "pymdownx.tilde": {
+                    "subscript": False
+                },
+                "pymdownx.emoji": {
+                    "emoji_index": emoji.gemoji,
+                    "alt": "unicode",
+                    "options": {
+                        "attributes": {
+                            "align": "absmiddle",
+                            "height": "20px",
+                            "width": "20px"
+                        }
+                    }
+                },
+                'markdown.extensions.toc': {
+                    'slugify': slugs.uslugify
+                }
+            }
+        ).convert(text)

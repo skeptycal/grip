@@ -37,6 +37,8 @@ Options:
                     The default is the filename.
   --norefresh       Do not automatically refresh the Readme content when
                     the file changes.
+  --render-offline  Render the Markdown with the local Python Markdown
+                    parser.
   --quiet           Do not print to the terminal.
 """
 
@@ -124,7 +126,7 @@ def main(argv=None, force_utf8=True, patch_svg=True):
     # Run server
     try:
         serve(path, host, port, args['--user-content'], args['--context'],
-              args['--user'], password, False, args['--wide'], False,
+              args['--user'], password, args['--render-offline'], args['--wide'], False,
               args['--api-url'], args['--title'], not args['--norefresh'],
               args['--browser'], args['--quiet'], None)
         return 0
