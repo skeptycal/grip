@@ -138,7 +138,10 @@ class OfflineRenderer(ReadmeRenderer):
             ],
             extension_configs={
                 "markdown.extensions.codehilite": {
-                    "css_class": "highlight"
+                    "css_class": "highlight",
+                    "guess_lang": False,
+                    "pygments_style": "github2014",
+                    "noclasses": True
                 },
                 "pymdownx.tilde": {
                     "subscript": False
